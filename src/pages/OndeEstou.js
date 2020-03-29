@@ -19,6 +19,9 @@ export default function OndeEstou() {
 		longitudeDelta: 0.0421,
 	})
 
+
+
+
 	const permission = async () => {
 		try {
 			const granted = await PermissionsAndroid.request(
