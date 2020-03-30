@@ -5,50 +5,52 @@ import {
  ImageBackground,
  Dimensions,
  TouchableOpacity,
- View
+ View,
+ Image
 } from 'react-native'
+import Icon from 'react-native-vector-icons/Feather'
 
 const { width, height } = Dimensions.get('window')
 const products = [
  {
   "id": 1,
-  "title": "Example of story title",
-  "author": "Author Name",
+  "productName": "Exemplo de nome",
+  "description": "description Name",
   "cover": require('../assets/products/1.png'),
   "pricing": 100.15
  },
  {
   "id": 2,
-  "title": "Example of story title",
-  "author": "Author Name",
+  "productName": "Exemplo de nome",
+  "description": "description Name",
   "cover": require('../assets/products/2.png'),
   "pricing": 100.15
  },
  {
   "id": 3,
-  "title": "Example of story title",
-  "author": "Author Name",
+  "productName": "Exemplo de nome",
+  "description": "description Name",
   "cover": require('../assets/products/3.png'),
   "pricing": 100.15
  },
  {
   "id": 4,
-  "title": "Example of story title",
-  "author": "Author Name",
+  "productName": "Exemplo de nome",
+  "description": "description Name",
   "cover": require('../assets/products/4.png'),
   "pricing": 100.15
  },
  {
   "id": 5,
-  "title": "Example of story title",
-  "author": "Author Name",
+  "productName": "Exemplo de nome",
+  "description": "description Name",
   "cover": require('../assets/products/5.png'),
   "pricing": 100.15
  },
  {
-  "id": 5,
-  "title": "Example of story title",
-  "author": "Author Name",
+  "id": 6,
+  "productName": "Exemplo de nome",
+  "description": "description Name",
   "cover": require('../assets/products/6.png'),
   "pricing": 150.50
  }
@@ -71,33 +73,55 @@ export default function MeusProdutos() {
     keyExtractor={product => String(product.id)}
     renderItem={({ item }) => (
      <View style={{
-      flex: 1,
-      flexDirection: "row",
-      width: width,
-      justifyContent: "center",
-      alignItems: 'center'
+      width: width
      }}>
 
       <TouchableOpacity style={{
        margin: 10,
-       width: width - 100,
-       height: 200,
-       borderWidth: 2,
-       borderColor: '#000',
+       height: 170,
+       backgroundColor: 'white',
+       shadowColor: "#000",
+       shadowOffset: {
+        width: 0,
+        height: 12,
+       }, shadowOpacity: 0.8,
+       shadowRadius: 2,
+       elevation: 10,
        borderRadius: 15,
-       flexDirection: "column",
+       flexDirection: "row",
        justifyContent: "center",
        alignItems: 'center'
       }}>
-       <ImageBackground source={item.cover}
-        style={{
-         opacity: 0.6, resizeMode: "cover",
-         justifyContent: "center"
-        }} />
-       <Text>{item.title}</Text>
-       <Text>{item.author}</Text>
-       {/* <Image style={{ width: 50, height: 50 }}>{item.cover}</Image> */}
-       <Text>R$ {item.pricing}</Text>
+       <View style={{ marginLeft: 0 }}>
+        <Image source={item.cover}
+         style={{
+          borderRadius: 15,
+          // borderWidth: 2, borderColor: '#000',
+          width: 170, height: 170,
+          resizeMode: "cover",
+         }} />
+       </View>
+
+       <View style={{
+        marginLeft: 10, paddingVertical: 45, paddingHorizontal: 10,
+        // borderWidth: 2, borderColor: '#000',
+        flexDirection: "column", justifyContent: "center", alignItems: "flex-start", flex: 1
+       }}>
+
+        <Text style={{ fontSize: 20 }}>{item.productName}</Text>
+        <Text style={{ fontSize: 14, fontWeight: 'bold', color: 'gray' }}>{item.description}</Text>
+
+        <View style={{ flex: 2, marginVertical:5, flexDirection: "row", alignItems: "center" }}>
+         <View>
+          <Text style={{ fontSize: 16 }}>R$ {item.pricing}<Text style={{ fontSize: 8 }}> à vista</Text></Text>
+         </View>
+         <TouchableOpacity>
+          <Icon name="airplay" color="black" size={30} style={{ marginLeft: 15, }} />
+         </TouchableOpacity>
+        </View>
+
+       </View>
+
       </TouchableOpacity>
      </View>
     )}
