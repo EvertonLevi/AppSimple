@@ -2,90 +2,103 @@ import React, { useState } from 'react'
 import {
   Text,
   FlatList, StyleSheet,
-  ImageBackground,
+  Image, ListItem,
   Dimensions,
   TouchableOpacity,
   View, TextInput,
-  Image
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
-
+import products from '../service/data'
 
 const { width, height } = Dimensions.get('window')
 export default function BuscarProdutos() {
 
-  const [text, setText] = useState('')
-  const [produtcSearch, setProdutcSearch] = useState('')
-  const products = [
-    {
-      "id": 1,
-      "productName": "Desinfetante",
-      "description": "description Name",
-      "cover": require('../assets/products/1.png'),
-      "pricing": 100.15
-    },
-    {
-      "id": 2,
-      "productName": "Sabão",
-      "description": "description Name",
-      "cover": require('../assets/products/2.png'),
-      "pricing": 100.15
-    },
-    {
-      "id": 3,
-      "productName": "Shampoo",
-      "description": "description Name",
-      "cover": require('../assets/products/3.png'),
-      "pricing": 100.15
-    },
-    {
-      "id": 4,
-      "productName": "Sabonete",
-      "description": "description Name",
-      "cover": require('../assets/products/4.png'),
-      "pricing": 100.15
-    },
-    {
-      "id": 5,
-      "productName": "Creme",
-      "description": "description Name",
-      "cover": require('../assets/products/5.png'),
-      "pricing": 100.15
-    },
-    {
-      "id": 6,
-      "productName": "Óleo",
-      "description": "description Name",
-      "cover": require('../assets/products/6.png'),
-      "pricing": 150.50
-    }
-  ]
-
+  const [data, setData] = useState([])
+  const [text, setText] = useState("")
 
   function filterSearch(text) {
-    const dataSearch = products.filter(function (item) {
-      const itemData = item.productName.toUpperCase()
-      const textData = text.toUpperCase()
+    const newData = products.filter(item => {
+      const itemData = `${item.productName}`
+      const textData = text
       return itemData.indexOf(textData) > -1
     })
-    this.setState({
-      products: products.cloneWithRows(dataSearch),
-      text: text
-    })
+    setData(newData)
   }
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+
+  function searchInput() {
+    return (
       <TextInput
         style={styles.textInput}
         placeholder="Busque seu produto preferido..."
-        onChangeText={(text) => { filterSearch(text) }}
-        value={text}
+        onChangeText={text => filterSearch(text)}
       >
-
       </TextInput>
+    )
+  }
 
-      <Text>Buscar Produtos</Text>
-      
+  return (
+    <View style={{ flex: 1, paddingTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+      <FlatList
+        data={data}
+        // extraData={}
+        onEndReachedThreshold={0.1}
+        renderItem={({ item }) => (
+          <View style={{
+            width: width
+          }}>
+
+            <TouchableOpacity style={{
+              margin: 10,
+              height: 170,
+              backgroundColor: 'white',
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 0,
+                height: 12,
+              }, shadowOpacity: 0.8,
+              shadowRadius: 2,
+              elevation: 10,
+              borderRadius: 15,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: 'center'
+            }}>
+              <View style={{ marginLeft: 0 }}>
+                <Image source={item.cover}
+                  style={{
+                    borderRadius: 15,
+                    // borderWidth: 2, borderColor: '#000',
+                    width: 170, height: 170,
+                    resizeMode: "cover",
+                  }} />
+              </View>
+
+              <View style={{
+                marginLeft: 10, paddingVertical: 45, paddingHorizontal: 10,
+                // borderWidth: 2, borderColor: '#000',
+                flexDirection: "column", justifyContent: "center", alignItems: "flex-start", flex: 1
+              }}>
+
+                <Text style={{ fontSize: 20 }}>{item.productName}</Text>
+                <Text style={{ fontSize: 14, fontWeight: 'bold', color: 'gray' }}>{item.description}</Text>
+
+                <View style={{ flex: 2, marginVertical: 5, flexDirection: "row", alignItems: "center" }}>
+                  <View>
+                    <Text style={{ fontSize: 16 }}>R$ {item.pricing}<Text style={{ fontSize: 8 }}> à vista</Text></Text>
+                  </View>
+                  <TouchableOpacity>
+                    <Icon name="airplay" color="black" size={30} style={{ marginLeft: 15, }} />
+                  </TouchableOpacity>
+                </View>
+
+              </View>
+
+            </TouchableOpacity>
+          </View>
+        )}
+        keyExtractor={item => item.productName}
+        ListHeaderComponent={searchInput()}
+      />
     </View>
   )
 }
@@ -95,9 +108,11 @@ const styles = StyleSheet.create({
 
   textInput: {
     backgroundColor: '#a8a8a8',
-    width: width,
+    width: width - 48,
     height: 50,
     marginTop: 0,
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
+    alignSelf: "center",
+    borderRadius: 10
   }
 })
