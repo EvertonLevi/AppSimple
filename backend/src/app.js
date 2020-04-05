@@ -1,12 +1,8 @@
 const express = require('express')
-const cors = require('cors')
-
 const app = express()
-const { errors } = require('celebrate')
 
-app.use(cors())
-app.use(express.json())
-// routes
-app.use(errors())
+app.get('/', (request, response) => {
+ return response.json({ message: "Hello carai" })
+})
 
-app.listen(3000)
+app.listen(3333)
