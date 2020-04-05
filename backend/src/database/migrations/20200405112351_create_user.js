@@ -2,8 +2,12 @@
 // método up sempre responsável pela criação da table
 exports.up = function (knex) {
  return knex.schema.createTable('users', function (table) {
-  table.increments('id').primary();
+  table.string('id').primary();
   table.string('name', 30).notNullable();
+
+  // table.string('product_id').notNullable();
+  // junto este ID, referenciando o ID da table PRODUCTS 
+  table.foreign('id').references('id').inTable('products');
  })
 };
 
