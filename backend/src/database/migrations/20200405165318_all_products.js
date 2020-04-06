@@ -8,9 +8,7 @@ exports.up = function (knex) {
   table.decimal('price', 6).notNullable()
   table.decimal('condition', 2).notNullable()
   // junto este ID, referenciando o ID da table USERS para mostrar Favorito
-  table.foreign('id').references('id').inTable('users')
   table.boolean('favorite').notNullable().defaultTo(false)
-
  })
 };
 
