@@ -4,6 +4,7 @@ exports.up = function (knex) {
  return knex.schema.createTable('users', function (table) {
   table.string('id').primary().notNullable()
   table.string('name', 30).notNullable();
+  table.string('password', 8).notNullable();
 
   // table.string('product_id').notNullable();
   // junto este ID, referenciando o ID da table PRODUCTS 
