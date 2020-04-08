@@ -5,6 +5,8 @@ exports.up = function (knex) {
   table.string('id').primary().notNullable()
   table.string('name', 30).notNullable();
   table.string('password', 8).notNullable();
+  table.string('email').notNullable();
+  table.string('pictures', [100])
 
   // table.string('product_id').notNullable();
   // junto este ID, referenciando o ID da table PRODUCTS 

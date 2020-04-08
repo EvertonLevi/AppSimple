@@ -1,21 +1,11 @@
 const express = require('express')
-const crypto = require('crypto')
-const connection = require('./database/connections')
+
+const UsersController = require('./controllers/UsersController')
 
 const routes = express.Router()
 
-routes.post('/users', (request, response) => {
- const { name, password } = request.body
- console.log(data)
- const id = crypto.randomBytes(3).toString('HEX')
-
- connection('users').insert({
-  id,
-  name,
-  password
- })
- return response.json({ id })
-})
+routes.post('/users', UsersController.create)
+routes.post('/users', UsersController.insert)
 
 // routes.get('/', (request, response) => {
 //  return response.json({ message: 'Testes ' })
